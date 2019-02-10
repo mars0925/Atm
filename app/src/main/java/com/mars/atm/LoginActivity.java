@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -22,19 +23,18 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        SharedPreferences sharedPreferences= getSharedPreferences("ATM",MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("LEVEL",1);
-        editor.putString("NAME","Mars");
-        editor.commit();
 
         e_id = findViewById(R.id.e_id);
         e_password = findViewById(R.id.e_password);
+
+        //如果getSharedPreferences有資料的話
+        String id = getSharedPreferences("ACOUNT",MODE_PRIVATE).getString("ID","");
+        e_id.setText(id);
     }
 
     public void login(View view){
 
-        String id = e_id.getText().toString();
+        final String id = e_id.getText().toString();
         final String password = e_password.getText().toString();
         /*取得firebease的資料*/
         FirebaseDatabase.getInstance().getReference("users").child(id).child("password")
@@ -43,6 +43,11 @@ public class LoginActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String pw = (String) dataSnapshot.getValue();
                         if (password.equals(pw)){
+                            //save id
+                            getSharedPreferences("ACOUNT",MODE_PRIVATE).edit()
+                                                .putString("ID",id)
+                                                .commit();
+
                             setResult(RESULT_OK);
                             finish();
                         }
