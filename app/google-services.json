@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "975834542412",
+    "firebase_url": "https://atmproject-f953f.firebaseio.com",
+    "project_id": "atmproject-f953f",
+    "storage_bucket": "atmproject-f953f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975834542412:android:7bfe0223b761a74a",
+        "android_client_info": {
+          "package_name": "com.mars.atm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975834542412-mhdut8ut8j61oc5j2i3m9aha8jmtmhrt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mars.atm",
+            "certificate_hash": "a72ffd7732b2475bbe9cace870c61bd34e98f2a9"
+          }
+        },
+        {
+          "client_id": "975834542412-7gt3a1vsab9jh1tcp2mh0ometmu8k8bc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBmFUwKWkC-FEtSAA2sFmrmVLEJKXAUTE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975834542412-7gt3a1vsab9jh1tcp2mh0ometmu8k8bc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
