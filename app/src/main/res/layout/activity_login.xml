@@ -92,4 +92,14 @@
         android:text="Button"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toTopOf="@+id/button" />
+
+    <CheckBox
+        android:id="@+id/cb_save_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="記住帳號"
+        app:layout_constraintStart_toEndOf="@+id/e_id"
+        app:layout_constraintTop_toTopOf="@+id/e_id" />
 </android.support.constraint.ConstraintLayout>

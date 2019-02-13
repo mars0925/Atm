@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
@@ -14,6 +16,8 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_LOGIN = 100;
     private boolean login;
+    private RecyclerView r_list;
+    private String[] functions;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -45,6 +49,16 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        functions = getResources().getStringArray(R.array.function);
+
+        //recycler
+        r_list = findViewById(R.id.r_list);
+        r_list.setHasFixedSize(true);
+        r_list.setLayoutManager(new LinearLayoutManager(this));
+        FunctionAdapter adapter = new FunctionAdapter(this);
+        r_list.setAdapter(adapter);
+
     }
 
     @Override
