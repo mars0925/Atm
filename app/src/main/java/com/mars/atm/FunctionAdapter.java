@@ -35,6 +35,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Fuctio
         return functions.length;
     }
 
+    /*先做ViewHoder*/
     public class FuctionViewHoder extends RecyclerView.ViewHolder {
         TextView name;
         public FuctionViewHoder(@NonNull View itemView) {

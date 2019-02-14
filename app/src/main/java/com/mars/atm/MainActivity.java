@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,10 +14,14 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_LOGIN = 100;
     private boolean login;
     private RecyclerView r_list;
+    private ArrayList<Function> functionList;
     private String[] functions;
 
     @Override
@@ -52,11 +57,18 @@ public class MainActivity extends AppCompatActivity {
 
         functions = getResources().getStringArray(R.array.function);
 
+        functionList = new ArrayList<>();
+        functionList.add(new Function(functions[0],R.drawable.func_finance));
+        functionList.add(new Function(functions[1],R.drawable.func_balance));
+        functionList.add(new Function(functions[2],R.drawable.func_contacts));
+        functionList.add(new Function(functions[3],R.drawable.func_transaction));
+        functionList.add(new Function(functions[4],R.drawable.func_exit));
+
         //recycler
         r_list = findViewById(R.id.r_list);
         r_list.setHasFixedSize(true);
-        r_list.setLayoutManager(new LinearLayoutManager(this));
-        FunctionAdapter adapter = new FunctionAdapter(this);
+        r_list.setLayoutManager(new GridLayoutManager(this,3));
+        GridViewAdapter adapter = new GridViewAdapter(functionList);
         r_list.setAdapter(adapter);
 
     }
