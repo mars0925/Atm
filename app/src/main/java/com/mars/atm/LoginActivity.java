@@ -1,12 +1,17 @@
 package com.mars.atm;
 
-import android.content.SharedPreferences;
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -18,9 +23,11 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE_CAMERA = 5;
     private EditText e_id;
     private EditText e_password;
     private CheckBox cb_save_id;
+    private Button b_camera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         e_id = findViewById(R.id.e_id);
         e_password = findViewById(R.id.e_password);
         cb_save_id = findViewById(R.id.cb_save_id);
+        b_camera = findViewById(R.id.camera);
 
         /*是否記住帳號*/
         cb_save_id.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -45,6 +53,38 @@ public class LoginActivity extends AppCompatActivity {
         //如果getSharedPreferences有資料的話
         String id = getSharedPreferences("ACOUNT",MODE_PRIVATE).getString("ID","");
         e_id.setText(id);
+
+        b_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int permission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
+
+                /*危險權限*/
+                if (permission == PackageManager.PERMISSION_GRANTED){
+                    takePhote();
+                }else {
+                    ActivityCompat.requestPermissions(LoginActivity.this,new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
+                }
+            }
+        });
+
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_CAMERA){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                takePhote();
+            }
+        }
+    }
+
+    private void takePhote() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivity(intent);
     }
 
     public void login(View view){
