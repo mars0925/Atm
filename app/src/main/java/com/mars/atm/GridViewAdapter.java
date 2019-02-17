@@ -10,8 +10,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridViewHolder>{
+public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridViewHolder> {
     private ArrayList<Function> functionList;
+    private MyListener listener;
 
     public GridViewAdapter(ArrayList<Function> functionList) {
         this.functionList = functionList;
@@ -20,19 +21,20 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
     @NonNull
     @Override
     public GridViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.icon_item,viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.icon_item, viewGroup, false);
 
         return new GridViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GridViewHolder gridViewHolder, int i) {
+    public void onBindViewHolder(@NonNull GridViewHolder gridViewHolder, final int i) {
         gridViewHolder.i_icon.setImageResource(functionList.get(i).getImageId());
         gridViewHolder.t_name.setText(functionList.get(i).getName());
 
         gridViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listener.clickResult(functionList.get(i));
 
             }
         });
@@ -43,13 +45,24 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
         return functionList.size();
     }
 
-    class GridViewHolder extends RecyclerView.ViewHolder{
+    class GridViewHolder extends RecyclerView.ViewHolder {
         ImageView i_icon;
         TextView t_name;
+
         GridViewHolder(@NonNull View itemView) {
             super(itemView);
             i_icon = itemView.findViewById(R.id.i_icon);
             t_name = itemView.findViewById(R.id.t_name);
         }
     }
+
+    public interface MyListener {
+        void clickResult(Function result);
+    }
+
+    public void setCustomClickListener(MyListener myListener) {
+        this.listener = myListener;
+    }
+
+
 }

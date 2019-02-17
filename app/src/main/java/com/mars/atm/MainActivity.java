@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,8 +18,9 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GridViewAdapter.MyListener{
     private static final int REQUEST_LOGIN = 100;
+    private static final String TAG = MainActivity.class.getSimpleName();
     private boolean login;
     private RecyclerView r_list;
     private ArrayList<Function> functionList;
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         functions = getResources().getStringArray(R.array.function);
 
         functionList = new ArrayList<>();
@@ -69,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         r_list.setHasFixedSize(true);
         r_list.setLayoutManager(new GridLayoutManager(this,3));
         GridViewAdapter adapter = new GridViewAdapter(functionList);
+        adapter.setCustomClickListener(this);
         r_list.setAdapter(adapter);
 
     }
@@ -93,5 +98,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void clickResult(Function result) {
+        Log.e(TAG, "clickResult: " + result.getName() );
     }
 }
