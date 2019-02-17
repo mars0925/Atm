@@ -104,4 +104,15 @@
         android:text="記住帳號"
         app:layout_constraintStart_toEndOf="@+id/e_id"
         app:layout_constraintTop_toTopOf="@+id/e_id" />
+
+    <Button
+        android:id="@+id/camera"
+        android:layout_width="129dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="camera"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 </android.support.constraint.ConstraintLayout>
