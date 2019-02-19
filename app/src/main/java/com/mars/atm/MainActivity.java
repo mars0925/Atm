@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements GridViewAdapter.MyListener{
     private static final int REQUEST_LOGIN = 100;
@@ -62,10 +60,10 @@ public class MainActivity extends AppCompatActivity implements GridViewAdapter.M
         functions = getResources().getStringArray(R.array.function);
 
         functionList = new ArrayList<>();
-        functionList.add(new Function(functions[0],R.drawable.func_finance));
+        functionList.add(new Function(functions[0],R.drawable.func_transaction));
         functionList.add(new Function(functions[1],R.drawable.func_balance));
-        functionList.add(new Function(functions[2],R.drawable.func_contacts));
-        functionList.add(new Function(functions[3],R.drawable.func_transaction));
+        functionList.add(new Function(functions[2],R.drawable.func_finance));
+        functionList.add(new Function(functions[3],R.drawable.func_contacts));
         functionList.add(new Function(functions[4],R.drawable.func_exit));
 
         //recycler
@@ -102,6 +100,21 @@ public class MainActivity extends AppCompatActivity implements GridViewAdapter.M
 
     @Override
     public void clickResult(Function result) {
+        switch (result.getImageId()){
+            case R.drawable.func_finance:
+                break;
+            case R.drawable.func_balance:
+                break;
+            case R.drawable.func_contacts:
+                Intent intent = new Intent(MainActivity.this,ContactActivity.class);
+                startActivity(intent);
+                break;
+            case R.drawable.func_transaction:
+                break;
+            case R.drawable.func_exit:
+                break;
+        }
+
         Log.e(TAG, "clickResult: " + result.getName() );
     }
 }
