@@ -1,4 +1,4 @@
-package com.mars.atm;
+package com.mars.atm.model;
 
 public class Function {
     private String name;

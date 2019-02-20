@@ -14,6 +14,9 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mars.atm.adapter.GridViewAdapter;
+import com.mars.atm.model.Function;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements GridViewAdapter.MyListener{

@@ -8,7 +8,14 @@ import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+
+import com.mars.atm.adapter.ContactAdapter;
+import com.mars.atm.model.ContactData;
+
+import java.util.ArrayList;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
@@ -17,6 +24,8 @@ public class ContactActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_CONTACT = 1;
     private static final String TAG = ContactActivity.class.getSimpleName();
+    private RecyclerView r_contact;
+    private ArrayList<ContactData> contactList;
 
 
     @Override
@@ -24,6 +33,7 @@ public class ContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
 
+        /*危險權限*/
         int permission = ActivityCompat.checkSelfPermission(this, READ_CONTACTS);
         if (permission == PERMISSION_GRANTED){
             readContact();
@@ -40,24 +50,36 @@ public class ContactActivity extends AppCompatActivity {
         Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, null);
 
+        contactList = new ArrayList<>();
+
         while (cursor.moveToNext()){
             String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
             Log.e(TAG, "readContact: " + name );
 
             int id = cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts._ID));
 
+            ContactData contactData = new ContactData(name);
+
             int hasphone = cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
 
-            Cursor phoneCursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",
-                                        new String[]{String.valueOf(id)},null);
+            if (hasphone == 1){
+                Cursor phoneCursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",
+                        new String[]{String.valueOf(id)},null);
 
-            while (phoneCursor.moveToNext()){
-                String number = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA));
-                Log.e(TAG, "readContact: \t" + number);
+                while (phoneCursor.moveToNext()){
+                    String number = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA));
+                    Log.e(TAG, "readContact: \t" + number);
+
+                    contactData.getPhones().add(number);
+                }
             }
-
-
+            contactList.add(contactData);
         }
+
+        r_contact = findViewById(R.id.r_contact);
+        r_contact.setHasFixedSize(true);
+        r_contact.setLayoutManager(new LinearLayoutManager(this));
+        r_contact.setAdapter(new ContactAdapter(contactList));
     }
 
     @Override
