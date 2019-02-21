@@ -2,16 +2,18 @@ package com.mars.atm;
 
 
 import android.database.Cursor;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
-
-import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.mars.atm.adapter.ContactAdapter;
 import com.mars.atm.model.ContactData;
 
@@ -90,5 +92,28 @@ public class ContactActivity extends AppCompatActivity {
                 readContact();
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.upload, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.uplaod_item:
+               String id = getSharedPreferences("ACOUNT",MODE_PRIVATE).getString("ID",null);
+                /*放到firebase上*/
+                if (id != null) {
+                    FirebaseDatabase.getInstance().getReference("users").child(id).child("contact").setValue(contactList);
+                }
+
+                Log.e(TAG, "onOptionsItemSelected");
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
