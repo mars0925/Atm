@@ -4,4 +4,5 @@
     <string name="main_function">主功能畫面</string>
     <string name="id">帳號</string>
     <string name="password">密碼</string>
+    <string name="title_activity_finance">FinanceActivity</string>
 </resources>

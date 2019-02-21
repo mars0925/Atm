@@ -105,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements GridViewAdapter.M
     public void clickResult(Function result) {
         switch (result.getImageId()){
             case R.drawable.func_finance:
+                Intent financeIntent = new Intent(MainActivity.this, FinanceActivity.class);
+                startActivity(financeIntent);
                 break;
             case R.drawable.func_balance:
                 break;
