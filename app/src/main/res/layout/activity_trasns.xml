@@ -4,12 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".FinanceActivity"
-    tools:showIn="@layout/activity_finance">
+    tools:context=".TrasnsActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/r_expense"
+        android:id="@+id/r_transation"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"

@@ -5,4 +5,5 @@
     <string name="id">帳號</string>
     <string name="password">密碼</string>
     <string name="title_activity_finance">FinanceActivity</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

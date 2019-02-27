@@ -58,16 +58,7 @@ public class MainActivity extends AppCompatActivity implements GridViewAdapter.M
             }
         });
 
-
-
-        functions = getResources().getStringArray(R.array.function);
-
-        functionList = new ArrayList<>();
-        functionList.add(new Function(functions[0],R.drawable.func_transaction));
-        functionList.add(new Function(functions[1],R.drawable.func_balance));
-        functionList.add(new Function(functions[2],R.drawable.func_finance));
-        functionList.add(new Function(functions[3],R.drawable.func_contacts));
-        functionList.add(new Function(functions[4],R.drawable.func_exit));
+        getfunction();
 
         //recycler
         r_list = findViewById(R.id.r_list);
@@ -77,6 +68,17 @@ public class MainActivity extends AppCompatActivity implements GridViewAdapter.M
         adapter.setCustomClickListener(this);
         r_list.setAdapter(adapter);
 
+    }
+
+    private void getfunction() {
+        functions = getResources().getStringArray(R.array.function);
+
+        functionList = new ArrayList<>();
+        functionList.add(new Function(functions[0],R.drawable.func_transaction));
+        functionList.add(new Function(functions[1],R.drawable.func_balance));
+        functionList.add(new Function(functions[2],R.drawable.func_finance));
+        functionList.add(new Function(functions[3],R.drawable.func_contacts));
+        functionList.add(new Function(functions[4],R.drawable.func_exit));
     }
 
     @Override
@@ -115,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements GridViewAdapter.M
                 startActivity(intent);
                 break;
             case R.drawable.func_transaction:
+                Intent traIntent = new Intent(MainActivity.this, TrasnsActivity.class);
+                startActivity(traIntent);
                 break;
             case R.drawable.func_exit:
                 break;

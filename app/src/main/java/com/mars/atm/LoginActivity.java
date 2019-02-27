@@ -20,10 +20,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mars.atm.dao.TranstTask;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_CAMERA = 5;
+
     private EditText e_id;
     private EditText e_password;
     private CheckBox cb_save_id;
@@ -34,11 +36,36 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        e_id = findViewById(R.id.e_id);
-        e_password = findViewById(R.id.e_password);
-        cb_save_id = findViewById(R.id.cb_save_id);
-        b_camera = findViewById(R.id.camera);
+        findViews();
 
+        saveID();
+
+        b_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getpermission();
+            }
+        });
+
+
+        new TranstTask(getApplicationContext()).execute("http://tw.yahoo.com");
+
+    }
+
+
+
+    private void getpermission() {
+        int permission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
+
+        /*危險權限*/
+        if (permission == PackageManager.PERMISSION_GRANTED){
+            takePhote();
+        }else {
+            ActivityCompat.requestPermissions(LoginActivity.this,new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
+        }
+    }
+
+    private void saveID() {
         /*是否記住帳號*/
         cb_save_id.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -53,23 +80,13 @@ public class LoginActivity extends AppCompatActivity {
         //如果getSharedPreferences有資料的話
         String id = getSharedPreferences("ACOUNT",MODE_PRIVATE).getString("ID","");
         e_id.setText(id);
+    }
 
-        b_camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int permission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
-
-                /*危險權限*/
-                if (permission == PackageManager.PERMISSION_GRANTED){
-                    takePhote();
-                }else {
-                    ActivityCompat.requestPermissions(LoginActivity.this,new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
-                }
-            }
-        });
-
-
-
+    private void findViews() {
+        e_id = findViewById(R.id.e_id);
+        e_password = findViewById(R.id.e_password);
+        cb_save_id = findViewById(R.id.cb_save_id);
+        b_camera = findViewById(R.id.camera);
     }
 
     @Override
@@ -129,5 +146,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public void quit(View view){
 
+    }
+
+    /**
+     * open map
+     */
+    public void map(View view){
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
     }
 }
